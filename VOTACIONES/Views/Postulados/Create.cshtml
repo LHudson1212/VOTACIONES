@@ -1,0 +1,136 @@
+﻿@model VOTACIONES.Models.Postulados
+
+@{
+    ViewBag.Title = "Crear Postulado";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    /* Centrar y dar ancho uniforme a los campos */
+    .centered-field {
+        max-width: 400px; /* ancho fijo cómodo */
+        margin: 0 auto; /* centra en el div */
+        text-align: center; /* centra texto dentro */
+    }
+
+        .centered-field textarea {
+            resize: none; /* deshabilita resize feo */
+        }
+
+    /* Select centrado */
+    .form-select.centered-field {
+        text-align-last: center;
+    }
+
+        .form-select.centered-field option {
+            text-align: center;
+        }
+
+    /* Previsualización de imagen */
+    #preview {
+        display: block;
+        margin: 0 auto;
+        border: 2px solid #198754; /* borde verde estilo SENA */
+    }
+
+    /* Tarjeta con bordes suaves */
+    .card {
+        border-radius: 1rem;
+    }
+
+    /* Botones redondeados */
+    .btn {
+        border-radius: 0.75rem;
+    }
+</style>
+
+<div class="container mt-5 d-flex justify-content-center">
+    <div class="card shadow-lg border-0 rounded-4 w-75">
+        <div class="card-header bg-success text-white text-center rounded-top-4">
+            <h3><i class="bi bi-person-plus-fill"></i> Registrar Nuevo Postulado</h3>
+        </div>
+
+        <div class="card-body p-4">
+            @using (Html.BeginForm("Create", "Postulados", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal text-center">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger mb-3" })
+
+                    <!-- Nombre -->
+                    <div class="form-group mb-3">
+                        @Html.LabelFor(m => m.Nombre, new { @class = "form-label fw-bold text-success" })
+                        @Html.EditorFor(m => m.Nombre, new { htmlAttributes = new { @class = "form-control centered-field", placeholder = "Ingrese el nombre del postulado" } })
+                        @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "text-danger" })
+                    </div>
+
+                    <!-- Propuestas -->
+                    <div class="form-group mb-3">
+                        @Html.LabelFor(m => m.Propuestas, new { @class = "form-label fw-bold text-success" })
+                        @Html.TextAreaFor(m => m.Propuestas, new { @class = "form-control centered-field", rows = 3, placeholder = "Ingrese las propuestas del postulado" })
+                        @Html.ValidationMessageFor(m => m.Propuestas, "", new { @class = "text-danger" })
+                    </div>
+
+                    <!-- Aptitudes (máximo 3) -->
+                    <div class="form-group mb-3">
+                        <label class="form-label fw-bold text-success">Aptitudes (máximo 3)</label>
+                        <input type="text" name="Aptitud1" class="form-control centered-field mb-2" placeholder="Primera aptitud" maxlength="50" />
+                        <input type="text" name="Aptitud2" class="form-control centered-field mb-2" placeholder="Segunda aptitud (opcional)" maxlength="50" />
+                        <input type="text" name="Aptitud3" class="form-control centered-field" placeholder="Tercera aptitud (opcional)" maxlength="50" />
+                    </div>
+
+                    <!-- Descripción -->
+                    <div class="form-group mb-3">
+                        @Html.LabelFor(m => m.Descripcion, new { @class = "form-label fw-bold text-success" })
+                        @Html.TextAreaFor(m => m.Descripcion, new { @class = "form-control centered-field", rows = 3, placeholder = "Ingrese una breve descripción del postulado" })
+                        @Html.ValidationMessageFor(m => m.Descripcion, "", new { @class = "text-danger" })
+                    </div>
+
+                    <!-- Jornada -->
+                    <div class="form-group mb-3">
+                        @Html.LabelFor(m => m.Jornada, new { @class = "form-label fw-bold text-success" })
+                        @Html.DropDownListFor(m => m.Jornada,
+                          new SelectList(new[] { "Mañana", "Tarde", "Noche" }),
+                          "-- Seleccione la Jornada --",
+                          new { @class = "form-select centered-field" })
+                        @Html.ValidationMessageFor(m => m.Jornada, "", new { @class = "text-danger" })
+                    </div>
+
+                    <!-- Foto -->
+                    <div class="form-group mb-4 text-center">
+                        <label class="form-label fw-bold text-success">Foto del Postulado</label>
+                        <input type="file" name="FotoFile" id="FotoFile" class="form-control centered-field" accept="image/*" onchange="previewImage(event)" />
+                        <div class="mt-3">
+                            <img id="preview" src="~/Content/img/default.png" alt="Previsualización" class="img-thumbnail rounded-3 shadow-sm" style="max-width: 200px;" />
+                        </div>
+                    </div>
+
+                    <!-- Botones -->
+                    <div class="form-group text-center mt-4">
+                        <button type="submit" class="btn btn-success px-4 me-2">
+                            <i class="bi bi-save"></i> Guardar
+                        </button>
+                        <a href="@Url.Action("Index", "Postulados")" class="btn btn-outline-dark px-4">
+                            <i class="bi bi-arrow-left"></i> Volver al listado
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function previewImage(event) {
+            var reader = new FileReader();
+            reader.onload = function () {
+                document.getElementById('preview').src = reader.result;
+            };
+            if (event.target.files && event.target.files[0]) {
+                reader.readAsDataURL(event.target.files[0]);
+            }
+        }
+    </script>
+}

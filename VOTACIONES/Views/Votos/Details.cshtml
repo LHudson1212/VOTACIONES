@@ -1,0 +1,50 @@
+﻿@model VOTACIONES.Models.Votos
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>Votos</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.FechaVoto)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.FechaVoto)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Aprendiz.correo_aprendiz)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Aprendiz.correo_aprendiz)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Postulados.Nombre)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Postulados.Nombre)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.IdVoto }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

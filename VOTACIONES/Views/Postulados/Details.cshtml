@@ -1,0 +1,58 @@
+﻿@model VOTACIONES.Models.Postulados
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>Postulados</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Nombre)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Propuestas)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Propuestas)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Aptitudes)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Aptitudes)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Descripcion)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.IdPostulado }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>
