@@ -1,0 +1,224 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Votación - Jornada Diurna</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/index.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+    }
+
+    .votacion-container {
+      width: 90%;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 30px 20px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    h2 {
+      color: #006633;
+      margin-bottom: 20px;
+    }
+
+    .candidatos {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .candidato {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .candidato:hover {
+      transform: scale(1.05);
+    }
+
+    .candidato input[type="radio"] {
+      display: none;
+    }
+
+    .candidato img {
+      width: 140px;
+      height: 140px;
+      border-radius: 12px;
+      border: 4px solid transparent;
+      object-fit: cover;
+      transition: 0.3s;
+    }
+
+    .candidato input[type="radio"]:checked + img {
+      border-color: #39A900;
+      box-shadow: 0 0 12px #39A900;
+    }
+
+    .candidato span {
+      margin-top: 10px;
+      font-weight: bold;
+      font-size: 15px;
+      color: #333;
+    }
+
+    button[type="button"] {
+      margin-top: 25px;
+      padding: 12px 25px;
+      background-color: #39A900;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button[type="button"]:hover {
+      background-color: #2b8a00;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      background-color: #006633;
+      color: white;
+      font-size: 14px;
+      margin-top: 40px;
+    }
+
+    media (max-width: 480px) {
+      .candidato img {
+        width: 100px;
+        height: 100px;
+      }
+
+      .candidato span {
+        font-size: 14px;
+      }
+
+      .votacion-container {
+        padding: 20px 15px;
+      }
+
+      button[type="button"] {
+        font-size: 16px;
+        padding: 10px 20px;
+      }
+
+      h2 {
+        font-size: 20px;
+      }
+    }
+    </style>
+</head>
+<body>
+
+    <div class="votacion-container">
+        <h2>Votación Estudiantil - Jornada Nocturna</h2>
+        <form id="formularioVoto">
+            <p style="margin-bottom: 15px;">Seleccione su candidato:</p>
+
+            <div class="candidatos">
+                <label class="candidato">
+                    <input type="radio" name="candidato" value="Juan Pérez" data-ficha="2593896" data-programa="ADSI" data-propuesta="Más espacios para estudio" data-aptitudes="Liderazgo, Comunicación" required>
+                    <img src="../imagenes/candidato1.PNG" alt="Candidato 1">
+                    <span>Juan Pérez</span>
+                </label>
+
+                <label class="candidato">
+                    <input type="radio" name="candidato" value="Laura Rodríguez" data-ficha="2879123" data-programa="Gestión Empresarial" data-propuesta="Mejorar bienestar" data-aptitudes="Empatía, Trabajo en equipo">
+                    <img src="../imagenes/candidato2.PNG" alt="Candidato 2">
+                    <span>Laura Rodríguez</span>
+                </label>
+
+                <label class="candidato">
+                    <input type="radio" name="candidato" value="Andrés Gómez" data-ficha="2983774" data-programa="Contabilidad" data-propuesta="Más actividades culturales" data-aptitudes="Organización, Liderazgo">
+                    <img src="../imagenes/candidato3.jpg" alt="Candidato 3">
+                    <span>Andrés Gómez</span>
+                </label>
+
+                <label class="candidato">
+                    <input type="radio" name="candidato" value="Camila Torres" data-ficha="2991002" data-programa="Diseño Multimedia" data-propuesta="Equipar salones" data-aptitudes="Creatividad, Proactividad">
+                    <img src="../imagenes/candidato3.jpg" alt="Candidato 4">
+                    <span>Camila Torres</span>
+                </label>
+            </div>
+
+            <button type="button" onclick="mostrarModal()">Votar</button>
+        </form>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalConfirmacion" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-center p-3">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-4">Confirmar voto</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <img id="modalImagen" src="" alt="Foto" width="140" class="rounded mb-2">
+                    <h3 id="modalNombre"></h3>
+                    <p><strong>Ficha:</strong> <span id="modalFicha"></span></p>
+                    <p><strong>Programa:</strong> <span id="modalPrograma"></span></p>
+                    <p><strong>Propuesta:</strong> <span id="modalPropuesta"></span></p>
+                    <p><strong>Aptitudes:</strong> <span id="modalAptitudes"></span></p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button class="btn btn-success" onclick="document.getElementById('formularioVoto').submit()">Confirmar voto</button>
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    function mostrarModal() {
+      const seleccionado = document.querySelector('input[name="candidato"]:checked');
+      if (!seleccionado) {
+        alert("Seleccione un candidato antes de votar.");
+        return;
+      }
+
+      const nombre = seleccionado.value;
+      const ficha = seleccionado.dataset.ficha;
+      const programa = seleccionado.dataset.programa;
+      const propuesta = seleccionado.dataset.propuesta;
+      const aptitudes = seleccionado.dataset.aptitudes;
+      const imagen = seleccionado.nextElementSibling.getAttribute('src');
+
+      document.getElementById('modalNombre').textContent = nombre;
+      document.getElementById('modalFicha').textContent = ficha;
+      document.getElementById('modalPrograma').textContent = programa;
+      document.getElementById('modalPropuesta').textContent = propuesta;
+      document.getElementById('modalAptitudes').textContent = aptitudes;
+      document.getElementById('modalImagen').src = imagen;
+
+      const modal = new bootstrap.Modal(document.getElementById('modalConfirmacion'));
+      modal.show();
+    }
+    </script>
+
+</body>
+</html>
