@@ -126,8 +126,10 @@ namespace VOTACIONES.Controllers
 
         public ActionResult Admin()
         {
-            return View();
+            var postulados = db.Postulados.ToList(); // obtienes todos los registros
+            return View(postulados); // envías el modelo a la vista
         }
+
         public ActionResult Votacion()
         {
             return View();
