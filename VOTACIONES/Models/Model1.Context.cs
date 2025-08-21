@@ -27,5 +27,7 @@ namespace VOTACIONES.Models
     
         public virtual DbSet<Administrador> Administrador { get; set; }
         public virtual DbSet<Aprendiz> Aprendiz { get; set; }
+        public virtual DbSet<Postulados> Postulados { get; set; }
+        public virtual DbSet<Votos> Votos { get; set; }
     }
 }

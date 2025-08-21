@@ -7,6 +7,10 @@
       <Diagram DiagramId="c9a99809992341e49d80e0162ba2c39e" Name="Diagram1">
         <EntityTypeShape EntityType="VOTACIONESModel.Administrador" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="VOTACIONESModel.Aprendiz" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VOTACIONESModel.Postulados" Width="1.5" PointX="2.75" PointY="5.125" />
+        <EntityTypeShape EntityType="VOTACIONESModel.Votos" Width="1.5" PointX="5" PointY="0.75" />
+        <AssociationConnector Association="VOTACIONESModel.FK_Voto_Aprendiz" />
+        <AssociationConnector Association="VOTACIONESModel.FK_Voto_Postulado" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="VOTACIONESModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="VOTACIONESModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Administrador">
           <Key>
             <PropertyRef Name="id" />
@@ -21,12 +21,66 @@
           <Property Name="correo_aprendiz" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="contraseña_aprendiz" Type="nvarchar" MaxLength="255" Nullable="false" />
         </EntityType>
+        <EntityType Name="Postulados">
+          <Key>
+            <PropertyRef Name="IdPostulado" />
+          </Key>
+          <Property Name="IdPostulado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Propuestas" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Aptitudes" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="100" />
+          <Property Name="Jornada" Type="nvarchar" MaxLength="50" />
+          <Property Name="Foto" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Votos">
+          <Key>
+            <PropertyRef Name="IdVoto" />
+          </Key>
+          <Property Name="IdVoto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdAprendiz" Type="int" Nullable="false" />
+          <Property Name="IdPostulado" Type="int" />
+          <Property Name="FechaVoto" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_Voto_Aprendiz">
+          <End Role="Aprendiz" Type="Self.Aprendiz" Multiplicity="1" />
+          <End Role="Votos" Type="Self.Votos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aprendiz">
+              <PropertyRef Name="id_aprendiz" />
+            </Principal>
+            <Dependent Role="Votos">
+              <PropertyRef Name="IdAprendiz" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Voto_Postulado">
+          <End Role="Postulados" Type="Self.Postulados" Multiplicity="0..1" />
+          <End Role="Votos" Type="Self.Votos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Postulados">
+              <PropertyRef Name="IdPostulado" />
+            </Principal>
+            <Dependent Role="Votos">
+              <PropertyRef Name="IdPostulado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="VOTACIONESModelStoreContainer">
           <EntitySet Name="Administrador" EntityType="Self.Administrador" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Aprendiz" EntityType="Self.Aprendiz" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Postulados" EntityType="Self.Postulados" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Votos" EntityType="Self.Votos" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Voto_Aprendiz" Association="Self.FK_Voto_Aprendiz">
+            <End Role="Aprendiz" EntitySet="Aprendiz" />
+            <End Role="Votos" EntitySet="Votos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Voto_Postulado" Association="Self.FK_Voto_Postulado">
+            <End Role="Postulados" EntitySet="Postulados" />
+            <End Role="Votos" EntitySet="Votos" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="VOTACIONESModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -45,11 +99,70 @@
           <Property Name="id_aprendiz" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="correo_aprendiz" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="contraseña_aprendiz" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Votos" Relationship="VOTACIONESModel.FK_Voto_Aprendiz" FromRole="Aprendiz" ToRole="Votos" />
         </EntityType>
         <EntityContainer Name="VOTACIONESEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Administrador" EntityType="Self.Administrador" />
           <EntitySet Name="Aprendiz" EntityType="Self.Aprendiz" />
+          <EntitySet Name="Postulados" EntityType="VOTACIONESModel.Postulados" />
+          <EntitySet Name="Votos" EntityType="VOTACIONESModel.Votos" />
+          <AssociationSet Name="FK_Voto_Aprendiz" Association="VOTACIONESModel.FK_Voto_Aprendiz">
+            <End Role="Aprendiz" EntitySet="Aprendiz" />
+            <End Role="Votos" EntitySet="Votos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Voto_Postulado" Association="VOTACIONESModel.FK_Voto_Postulado">
+            <End Role="Postulados" EntitySet="Postulados" />
+            <End Role="Votos" EntitySet="Votos" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Postulados">
+          <Key>
+            <PropertyRef Name="IdPostulado" />
+          </Key>
+          <Property Name="IdPostulado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Propuestas" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Aptitudes" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Jornada" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Foto" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Votos" Relationship="VOTACIONESModel.FK_Voto_Postulado" FromRole="Postulados" ToRole="Votos" />
+        </EntityType>
+        <EntityType Name="Votos">
+          <Key>
+            <PropertyRef Name="IdVoto" />
+          </Key>
+          <Property Name="IdVoto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdAprendiz" Type="Int32" Nullable="false" />
+          <Property Name="IdPostulado" Type="Int32" />
+          <Property Name="FechaVoto" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Aprendiz" Relationship="VOTACIONESModel.FK_Voto_Aprendiz" FromRole="Votos" ToRole="Aprendiz" />
+          <NavigationProperty Name="Postulados" Relationship="VOTACIONESModel.FK_Voto_Postulado" FromRole="Votos" ToRole="Postulados" />
+        </EntityType>
+        <Association Name="FK_Voto_Aprendiz">
+          <End Type="VOTACIONESModel.Aprendiz" Role="Aprendiz" Multiplicity="1" />
+          <End Type="VOTACIONESModel.Votos" Role="Votos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aprendiz">
+              <PropertyRef Name="id_aprendiz" />
+            </Principal>
+            <Dependent Role="Votos">
+              <PropertyRef Name="IdAprendiz" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Voto_Postulado">
+          <End Type="VOTACIONESModel.Postulados" Role="Postulados" Multiplicity="0..1" />
+          <End Type="VOTACIONESModel.Votos" Role="Votos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Postulados">
+              <PropertyRef Name="IdPostulado" />
+            </Principal>
+            <Dependent Role="Votos">
+              <PropertyRef Name="IdPostulado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -71,6 +184,29 @@
                 <ScalarProperty Name="id_aprendiz" ColumnName="id_aprendiz" />
                 <ScalarProperty Name="correo_aprendiz" ColumnName="correo_aprendiz" />
                 <ScalarProperty Name="contraseña_aprendiz" ColumnName="contraseña_aprendiz" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Postulados">
+            <EntityTypeMapping TypeName="VOTACIONESModel.Postulados">
+              <MappingFragment StoreEntitySet="Postulados">
+                <ScalarProperty Name="Foto" ColumnName="Foto" />
+                <ScalarProperty Name="Jornada" ColumnName="Jornada" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Aptitudes" ColumnName="Aptitudes" />
+                <ScalarProperty Name="Propuestas" ColumnName="Propuestas" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdPostulado" ColumnName="IdPostulado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Votos">
+            <EntityTypeMapping TypeName="VOTACIONESModel.Votos">
+              <MappingFragment StoreEntitySet="Votos">
+                <ScalarProperty Name="FechaVoto" ColumnName="FechaVoto" />
+                <ScalarProperty Name="IdPostulado" ColumnName="IdPostulado" />
+                <ScalarProperty Name="IdAprendiz" ColumnName="IdAprendiz" />
+                <ScalarProperty Name="IdVoto" ColumnName="IdVoto" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

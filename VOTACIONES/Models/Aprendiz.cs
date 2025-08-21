@@ -14,8 +14,17 @@ namespace VOTACIONES.Models
     
     public partial class Aprendiz
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Aprendiz()
+        {
+            this.Votos = new HashSet<Votos>();
+        }
+    
         public int id_aprendiz { get; set; }
         public string correo_aprendiz { get; set; }
         public string contraseña_aprendiz { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Votos> Votos { get; set; }
     }
 }

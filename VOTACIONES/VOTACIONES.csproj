@@ -132,6 +132,8 @@
     <Compile Include="Controllers\AdministradorsController.cs" />
     <Compile Include="Controllers\AprendizsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PostuladosController.cs" />
+    <Compile Include="Controllers\VotosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -155,6 +157,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Postulados.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Votos.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -247,6 +255,16 @@
     <Content Include="Views\Aprendizs\Nocturna.cshtml" />
     <Content Include="Views\Administradors\Admin.cshtml" />
     <Content Include="Views\Administradors\Votacion.cshtml" />
+    <Content Include="Views\Postulados\Create.cshtml" />
+    <Content Include="Views\Postulados\Delete.cshtml" />
+    <Content Include="Views\Postulados\Details.cshtml" />
+    <Content Include="Views\Postulados\Edit.cshtml" />
+    <Content Include="Views\Postulados\Index.cshtml" />
+    <Content Include="Views\Votos\Create.cshtml" />
+    <Content Include="Views\Votos\Delete.cshtml" />
+    <Content Include="Views\Votos\Details.cshtml" />
+    <Content Include="Views\Votos\Edit.cshtml" />
+    <Content Include="Views\Votos\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
