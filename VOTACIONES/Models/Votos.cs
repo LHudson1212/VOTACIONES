@@ -16,6 +16,7 @@ namespace VOTACIONES.Models
     {
         public int IdVoto { get; set; }
         public int IdAprendiz { get; set; }
+       
         public Nullable<int> IdPostulado { get; set; }
         public Nullable<System.DateTime> FechaVoto { get; set; }
     

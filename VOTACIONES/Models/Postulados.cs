@@ -27,7 +27,9 @@ namespace VOTACIONES.Models
         public string Descripcion { get; set; }
         public string Jornada { get; set; }
         public string Foto { get; set; }
-    
+
+        public int CantidadVotos { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Votos> Votos { get; set; }
     }

@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
 
     <style>
-        /* 🎨 Colores institucionales del SENA */
         :root {
             --sena-green: #39A900;
             --sena-dark: #2E2E2E;
@@ -57,11 +56,6 @@
         h2, h3, h4 {
             color: var(--sena-dark);
         }
-
-        .card-header {
-            font-weight: bold;
-            text-transform: uppercase;
-        }
     </style>
 </head>
 <body>
@@ -81,35 +75,49 @@
 
     <!-- Contenido -->
     <div class="container mt-4">
-        <h2 class="mb-4 text-center">📊 Listado de Postulados</h2>
+        <h2 class="mb-4 text-center">📊 Resultados por Jornada</h2>
 
-        <div class="table-responsive shadow-sm">
-            <table class="table table-bordered table-hover">
-                <thead class="table-success">
-                    <tr>
-                        <th>Foto</th>
-                        <th>Nombre</th>
-                        <th>Documento</th>
-                        <th>
+        @if (Model != null && Model.Any())
+        {
+            var grupos = Model.GroupBy(p => p.Jornada);
 
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var p in Model)
-                    {
-                        <tr>
-                            <td>
-                                <img src="@p.Foto" class="rounded-circle shadow-sm" width="60" height="60" style="object-fit: cover;" />
-                            </td>
-                            <td>@p.Nombre</td>
-                            
-                            <td>@p.Jornada</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+            foreach (var grupo in grupos)
+            {
+                <h3 class="mt-4">🕑 Jornada: @grupo.Key</h3>
+
+                <div class="table-responsive shadow-sm mb-4">
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-success">
+                            <tr>
+                                <th>Foto</th>
+                                <th>Nombre</th>
+                                <th>Cantidad de Votos</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var p in grupo)
+                            {
+                                <tr>
+                                    <td>
+                                        <img src="@p.Foto" class="rounded-circle shadow-sm" width="60" height="60" style="object-fit: cover;" />
+                                    </td>
+                                    <td>@p.Nombre</td>
+                                    <td>@p.CantidadVotos</td>
+                                </tr>
+                            }
+                            <tr class="table-warning fw-bold">
+                                <td colspan="2">TOTAL VOTOS JORNADA @grupo.Key</td>
+                                <td>@grupo.Sum(x => x.CantidadVotos)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="alert alert-warning">⚠ No hay postulados registrados.</div>
+        }
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
