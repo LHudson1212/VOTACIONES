@@ -110,13 +110,13 @@
         @using (Html.BeginForm("Login", "Home", FormMethod.Post))
         {
             <label for="documento">
-                Número de Documento o Correo soy sena
+                Número de Documento
                 <span class="tooltip-wrapper" id="tooltipDoc">
                     <span class="tooltip-icon" onclick="mostrarTooltip('tooltipDoc')">?</span>
-                    <span class="tooltip-box">Debe ingresar su número de documento o su correo institucional.</span>
+                    <span class="tooltip-box">Debe ingresar su número de documento</span>
                 </span>
             </label>
-            <input type="text" id="documento" name="documento" placeholder="Ingrese su número de documento o correo" required onclick="mostrarTooltip('tooltipDoc')" />
+            <input type="number" id="documento" name="documento" required="" placeholder="Ingrese su número de documento" onclick="mostrarTooltip('tooltipDoc')" />
 
             <label for="contrasena">
                 Contraseña
