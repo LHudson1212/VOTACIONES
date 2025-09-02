@@ -91,7 +91,7 @@
                     <div class="form-group mb-3">
                         @Html.LabelFor(m => m.Jornada, new { @class = "form-label fw-bold text-success" })
                         @Html.DropDownListFor(m => m.Jornada,
-                          new SelectList(new[] { "Mañana", "Tarde", "Noche" }),
+                          new SelectList(new[] { "Diurna", "Mixta", "Nocturna" }),
                           "-- Seleccione la Jornada --",
                           new { @class = "form-select centered-field" })
                         @Html.ValidationMessageFor(m => m.Jornada, "", new { @class = "text-danger" })

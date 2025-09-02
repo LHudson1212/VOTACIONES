@@ -37,30 +37,42 @@ namespace VOTACIONES.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult Login(string documento, string contrasena)
+    [HttpPost]
+    public ActionResult Login(string documento, string contrasena)
+    {
+        // Buscar administrador
+        var admin = db.Administrador
+            .FirstOrDefault(a => a.correo_admin == documento && a.contraseña_admin == contrasena);
+
+        if (admin != null)
         {
-            var admin = db.Administrador
-                .FirstOrDefault(a => a.correo_admin == documento && a.contraseña_admin == contrasena);
+            // Guardar objeto completo en sesión
+            Session["Administrador"] = admin;
+            // Guardar el ID del administrador logueado
+            Session["AdminId"] = admin.id;
 
-            if (admin != null)
-            {
-                Session["Administrador"] = admin;
-                return RedirectToAction("Admin", "Administradors");
-            }
-
-            var aprendiz = db.Aprendiz
-                .FirstOrDefault(a => a.correo_aprendiz == documento && a.contraseña_aprendiz == contrasena);
-
-            if (aprendiz != null)
-            {
-                Session["Aprendiz"] = aprendiz;
-                return RedirectToAction("Seleccion", "Aprendizs");
-            }
-
-            ViewBag.Error = "Usuario o contraseña incorrectos";
-            return View();
+            return RedirectToAction("Admin", "Administradors");
         }
+
+        // Buscar aprendiz
+        var aprendiz = db.Aprendiz
+            .FirstOrDefault(a => a.correo_aprendiz == documento && a.contraseña_aprendiz == contrasena);
+
+        if (aprendiz != null)
+        {
+            // Guardar objeto completo en sesión
+            Session["Aprendiz"] = aprendiz;
+            // Guardar el ID del aprendiz logueado
+            Session["AprendizId"] = aprendiz.id_aprendiz;
+
+            return RedirectToAction("Seleccion", "Aprendizs");
+        }
+
+        // Si no se encuentra usuario válido
+        ViewBag.Error = "Usuario o contraseña incorrectos";
+        return View();
+    }
+
 
 
 

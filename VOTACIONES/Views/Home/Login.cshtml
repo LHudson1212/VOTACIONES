@@ -6,101 +6,100 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Sistema de Votación - SENA</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../CSS/index.css">
+    <meta charset="UTF-8">
+    <title>Sistema de Votación - SENA</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../CSS/index.css">
 
-  <style>
-    /* Tooltip personalizado */
-    .tooltip-wrapper {
-      position: relative;
-      display: inline-block;
-    }
+    <style>
+        /* Tooltip personalizado */
+        .tooltip-wrapper {
+            position: relative;
+            display: inline-block;
+        }
 
-    .tooltip-icon {
-      background-color: #39A900;
-      color: white;
-      border-radius: 50%;
-      padding: 2px 7px;
-      font-weight: bold;
-      font-size: 14px;
-      margin-left: 6px;
-      cursor: pointer;
-    }
+        .tooltip-icon {
+            background-color: #39A900;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 7px;
+            font-weight: bold;
+            font-size: 14px;
+            margin-left: 6px;
+            cursor: pointer;
+        }
 
-    .tooltip-box {
-      visibility: hidden;
-      opacity: 0;
-      max-width: 280px;
-      background-color: #333;
-      color: #fff;
-      text-align: left;
-      border-radius: 6px;
-      padding: 10px;
-      position: absolute;
-      bottom: 130%;
-      left: 0;
-      z-index: 1;
-      transition: opacity 0.3s ease;
-      font-size: 14px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-      word-wrap: break-word;
-      line-height: 1.4;
-    }
+        .tooltip-box {
+            visibility: hidden;
+            opacity: 0;
+            max-width: 280px;
+            background-color: #333;
+            color: #fff;
+            text-align: left;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            bottom: 130%;
+            left: 0;
+            z-index: 1;
+            transition: opacity 0.3s ease;
+            font-size: 14px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            word-wrap: break-word;
+            line-height: 1.4;
+        }
 
-    .tooltip-visible .tooltip-box {
-      visibility: visible;
-      opacity: 1;
-    }
+        .tooltip-visible .tooltip-box {
+            visibility: visible;
+            opacity: 1;
+        }
 
-    /* Caja de login */
-    .login-box {
-      background-color: #ffffff;
-      padding: 30px 40px;
-      border-radius: 10px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-      max-width: 400px;
-      margin: 80px auto;
-      text-align: center;
-    }
+        /* Caja de login */
+        .login-box {
+            background-color: #ffffff;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 80px auto;
+            text-align: center;
+        }
 
-    .login-box input {
-      width: 95%;
-      padding: 10px;
-      margin-top: 8px;
-      margin-bottom: 20px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
+            .login-box input {
+                width: 95%;
+                padding: 10px;
+                margin-top: 8px;
+                margin-bottom: 20px;
+                border: 1px solid #ccc;
+                border-radius: 6px;
+            }
 
-    .btn {
-      background-color: #006633;
-      color: white;
-      padding: 12px;
-      border: none;
-      border-radius: 6px;
-      width: 100%;
-      font-size: 16px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
+        .btn {
+            background-color: #006633;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            width: 100%;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
 
-    .btn:hover {
-      background-color: #004d26;
-    }
+            .btn:hover {
+                background-color: #004d26;
+            }
 
-   
 
-      .tooltip-box {
-        max-width: 90vw;
-        left: 50%;
-        transform: translateX(-50%);
-        bottom: 130%;
-        text-align: center;
-      }
-    
-  </style>
+
+        .tooltip-box {
+            max-width: 90vw;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 130%;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <div class="login-box">

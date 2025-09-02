@@ -128,17 +128,87 @@ namespace VOTACIONES.Controllers
         {
             return View();
         }
+
+
+        [HttpPost]
+        public ActionResult Votar(int postuladoId)
+        {
+            try
+            {
+                // 1. Obtener el ID del aprendiz desde la sesión
+                var aprendizId = Session["AprendizId"] as int?;
+                if (aprendizId == null)
+                {
+                    TempData["Error"] = "⚠ Debes iniciar sesión para votar.";
+                    return RedirectToAction("Login", "Home");
+                }
+
+                // 2. Buscar el postulado seleccionado
+                var postulado = db.Postulados.Find(postuladoId);
+                if (postulado == null)
+                {
+                    TempData["Error"] = "❌ El postulado no existe.";
+                    return RedirectToAction("Diurna");
+                }
+
+                // 3. Verificar si el aprendiz ya votó (en cualquier jornada)
+                bool yaVoto = db.Votos.Any(v => v.IdAprendiz == aprendizId.Value);
+
+                if (yaVoto)
+                {
+                    TempData["VotoExistente"] = true;
+                    return RedirectToAction(postulado.Jornada); // Redirige a la misma vista donde está
+                }
+
+                // 4. Guardar voto
+                var voto = new Votos
+                {
+                    IdAprendiz = aprendizId.Value,
+                    IdPostulado = postuladoId,
+                    FechaVoto = DateTime.Now
+                };
+
+                db.Votos.Add(voto);
+                db.SaveChanges();
+
+                TempData["VotoExitoso"] = true;
+                return RedirectToAction(postulado.Jornada);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = "❌ Error al registrar el voto: " + ex.Message;
+                return RedirectToAction("Diurna");
+            }
+        }
+
+
         public ActionResult Diurna()
         {
-            return View();
+            // Traemos solo los postulados de la jornada diurna
+            var candidatos = db.Postulados
+                               .Where(p => p.Jornada == "Diurna")
+                               .ToList();
+
+            return View(candidatos);
         }
+
         public ActionResult Mixta()
         {
-            return View();
+            // Traemos solo los postulados de la jornada diurna
+            var candidatos = db.Postulados
+                               .Where(p => p.Jornada == "Mixta")
+                               .ToList();
+
+            return View(candidatos);
         }
         public ActionResult Nocturna()
         {
-            return View();
+            // Traemos solo los postulados de la jornada diurna
+            var candidatos = db.Postulados
+                               .Where(p => p.Jornada == "Nocturna")
+                               .ToList();
+
+            return View(candidatos);
         }
     }
 }
