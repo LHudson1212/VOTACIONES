@@ -361,3 +361,9 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/documentos para eleción de representante.xlsx
+/base de datos.sql
+/VOTACIONES/Views/Home/Login.cshtml
+/VOTACIONES/Views/Administradors/Votacion.cshtml
+/VOTACIONES/Views/Administradors/Delete.cshtml
+/.gitignore
