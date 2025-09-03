@@ -2,106 +2,209 @@
 
 @{
     ViewBag.Title = "Gestión de Postulados";
+    Layout = "~/Views/Shared/_Layout.cshtml";
     var jornadas = Model.GroupBy(p => p.Jornada);
 }
 
 <style>
-    /* Estilos con colores del SENA */
-    .sena-title {
-        color: #39A900;
+    /* === Estilo Global === */
+    .card {
+        border-radius: 1rem;
+    }
+
+    .card-header {
+        background: linear-gradient(135deg, #006633, #009966);
+        color: white;
         font-weight: bold;
-        border-left: 6px solid #39A900;
-        padding-left: 10px;
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 1rem;
+        text-align: center;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     }
 
-    .card-sena {
-        border: 2px solid #39A900;
-        border-radius: 10px;
-        transition: transform 0.3s, box-shadow 0.3s;
+    .btn {
+        border-radius: 0.75rem;
+        transition: all 0.3s ease;
     }
-
-        .card-sena:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-        }
 
     .btn-sena {
-        background-color: #39A900;
+        background: linear-gradient(135deg, #006633, #009966);
         color: white;
         border: none;
     }
 
         .btn-sena:hover {
-            background-color: #2d8500;
+            background: linear-gradient(135deg, #009966, #00cc99);
+            transform: scale(1.05);
             color: white;
         }
 
-    .modal-header {
-        background-color: #39A900;
-        color: white;
+    .btn-outline-dark {
+        border-radius: 0.75rem;
     }
 
-    .modal-footer .btn-secondary {
-        background-color: #6c757d;
+    /* Tarjeta de postulados */
+    .postulado-card {
+        border: 1.5px solid #39A900;
+        border-radius: 1rem;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+        .postulado-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+    /* Imagen de postulados */
+    .postulado-img {
+        height: 200px;
+        object-fit: cover;
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 1rem;
+    }
+
+    /* Modal */
+    .modal-content {
+        border-radius: 1rem;
+    }
+
+    .modal-header {
+        background: linear-gradient(135deg, #006633, #009966);
         color: white;
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 1rem;
+    }
+
+    .modal-footer .btn-danger {
+        border-radius: 0.75rem;
+    }
+
+    /* Encabezado de jornada */
+    .jornada-title {
+        color: #006633;
+        font-weight: bold;
+        border-left: 6px solid #39A900;
+        padding-left: 10px;
+        margin-top: 30px;
+        margin-bottom: 15px;
     }
 </style>
 
-<h2 class="mb-4 sena-title">Gestión de Postulados</h2>
+<div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-header">
+            <h3><i class="bi bi-people-fill"></i> Gestión de Postulados</h3>
+        </div>
+        <div class="card-body p-4">
 
-<a href="@Url.Action("Create", "Postulados")" class="btn btn-sena mb-4">➕ Nuevo Postulado</a>
-
-@foreach (var jornada in jornadas)
-{
-    <h3 class="mt-4 sena-title">Jornada: @jornada.Key</h3>
-    <div class="row">
-        @foreach (var item in jornada)
-        {
-            <div class="col-md-3 mb-4">
-                <div class="card card-sena shadow-sm">
-                    <img src="@item.Foto" class="card-img-top" alt="@item.Nombre" style="height:200px; object-fit:cover;" />
-                    <div class="card-body text-center">
-                        <h5 class="card-title text-success">@item.Nombre</h5>
-
-                        <button type="button" class="btn btn-sena btn-sm" data-bs-toggle="modal" data-bs-target="#modalPostulado_@item.IdPostulado">
-                            📋 Ver Detalles
-                        </button>
-                        <a href="@Url.Action("Delete", "Postulados", new { id = item.IdPostulado })"
-                           class="btn btn-danger btn-sm mt-2"
-                           onclick="return confirm('¿Seguro que deseas eliminar este postulado?');">
-                            🗑 Eliminar
-                        </a>
-                    </div>
-                </div>
+            <div class="text-end mb-4">
+                <a href="@Url.Action("Create", "Postulados")" class="btn btn-sena px-4">
+                    <i class="bi bi-person-plus-fill"></i> Nuevo Postulado
+                </a>
             </div>
 
-            <!-- Modal -->
-            <div class="modal fade" id="modalPostulado_@item.IdPostulado" tabindex="-1" aria-labelledby="modalLabel_@item.IdPostulado" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="modalLabel_@item.IdPostulado">@item.Nombre</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <img src="@item.Foto" class="img-fluid rounded shadow" alt="@item.Nombre" />
-                                </div>
-                                <div class="col-md-8">
-                                    <p><strong>Nombre:</strong> @item.Nombre</p>
-                                    <p><strong>Jornada:</strong> @item.Jornada</p>
-                                    <p><strong>Propuesta:</strong></p>
-                                    <p>@item.Propuestas</p>
+            @if (jornadas.Any())
+            {
+                foreach (var jornada in jornadas)
+                {
+                    <h4 class="jornada-title">📌 Jornada: @jornada.Key</h4>
+                    <div class="row">
+                        @foreach (var item in jornada)
+                        {
+                            <div class="col-md-3 col-sm-6 mb-4">
+                                <div class="card postulado-card shadow-sm h-100">
+                                    <img src="@item.Foto" alt="@item.Nombre" class="postulado-img" />
+                                    <div class="card-body text-center d-flex flex-column justify-content-between">
+                                        <h5 class="fw-bold text-success">@item.Nombre</h5>
+                                        <div class="mt-3">
+                                            <!-- Botón Ver Detalles -->
+                                            <button type="button" class="btn btn-sena btn-sm mb-2 w-100"
+                                                    data-bs-toggle="modal" data-bs-target="#modalPostulado_@item.IdPostulado">
+                                                <i class="bi bi-card-text"></i> Ver Detalles
+                                            </button>
+
+                                            <!-- Botón Eliminar con modal -->
+                                            <button type="button" class="btn btn-danger btn-sm w-100"
+                                                    data-bs-toggle="modal" data-bs-target="#modalEliminar_@item.IdPostulado">
+                                                <i class="bi bi-trash"></i> Eliminar
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        </div>
+
+                            <!-- Modal Detalles -->
+                            <div class="modal fade" id="modalPostulado_@item.IdPostulado" tabindex="-1" aria-labelledby="modalLabel_@item.IdPostulado" aria-hidden="true">
+                                <div class="modal-dialog modal-lg modal-dialog-centered">
+                                    <div class="modal-content shadow">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title fw-bold" id="modalLabel_@item.IdPostulado">
+                                                <i class="bi bi-person-circle"></i> @item.Nombre
+                                            </h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-md-4 text-center">
+                                                    <img src="@item.Foto" class="img-fluid rounded shadow" alt="@item.Nombre" />
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <p><strong>📌 Jornada:</strong> @item.Jornada</p>
+                                                    <p><strong>💡 Propuestas:</strong></p>
+                                                    <p>@item.Propuestas</p>
+                                                    <p><strong>⭐ Aptitudes:</strong> @item.Aptitudes</p>
+                                                    <p><strong>📝 Descripción:</strong></p>
+                                                    <p>@item.Descripcion</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Modal Confirmar Eliminación -->
+                            <div class="modal fade" id="modalEliminar_@item.IdPostulado" tabindex="-1" aria-labelledby="modalEliminarLabel_@item.IdPostulado" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content shadow">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title fw-bold" id="modalEliminarLabel_@item.IdPostulado">
+                                                <i class="bi bi-exclamation-triangle-fill"></i> Confirmar Eliminación
+                                            </h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                                        </div>
+                                        <div class="modal-body text-center">
+                                            <p class="fw-bold">¿Estás seguro de eliminar el postulado <span class="text-success">"@item.Nombre"</span>?</p>
+                                            <p>⚠ Esta acción también eliminará todos sus votos registrados.</p>
+                                        </div>
+                                        <div class="modal-footer justify-content-center">
+                                            <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">Cancelar</button>
+
+                                            @using (Html.BeginForm("Delete", "Postulados", FormMethod.Post, new { @class = "d-inline" }))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                @Html.Hidden("id", item.IdPostulado)
+
+                                                <button type="submit" class="btn btn-danger px-4">
+                                                    <i class="bi bi-trash"></i> Eliminar
+                                                </button>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
                     </div>
+                }
+            }
+            else
+            {
+                <div class="alert alert-warning text-center" role="alert">
+                    <i class="bi bi-exclamation-triangle"></i> No hay postulados registrados.
                 </div>
-            </div>
-        }
+            }
+        </div>
     </div>
-}
+</div>

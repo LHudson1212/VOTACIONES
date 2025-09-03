@@ -145,9 +145,19 @@ namespace VOTACIONES.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Postulados postulados = db.Postulados.Find(id);
-            db.Postulados.Remove(postulados);
-            db.SaveChanges();
+            var postulado = db.Postulados.Find(id);
+
+            if (postulado != null)
+            {
+                // Primero eliminar los votos asociados
+                var votos = db.Votos.Where(v => v.IdPostulado == postulado.IdPostulado).ToList();
+                db.Votos.RemoveRange(votos);
+
+                // Luego eliminar el postulado
+                db.Postulados.Remove(postulado);
+                db.SaveChanges();
+            }
+
             return RedirectToAction("Index");
         }
 

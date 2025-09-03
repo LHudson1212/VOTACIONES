@@ -168,6 +168,8 @@ namespace VOTACIONES.Controllers
                     FechaVoto = DateTime.Now
                 };
 
+                postulado.CantidadVotos += 1;
+
                 db.Votos.Add(voto);
                 db.SaveChanges();
 
