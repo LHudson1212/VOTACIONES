@@ -15,7 +15,6 @@ namespace VOTACIONES.Models
     public partial class Administrador
     {
         public int id { get; set; }
-        public string correo_admin { get; set; }
-        public string contraseña_admin { get; set; }
+        public string DocumentoIdentidad { get; set; }
     }
 }

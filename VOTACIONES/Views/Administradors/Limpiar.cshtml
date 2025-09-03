@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "Limpiar Base de Datos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .card-header.bg-danger {
+        background: linear-gradient(135deg, #cc0000, #ff3333);
+        font-weight: bold;
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 1rem;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .btn-danger {
+        border-radius: 0.75rem;
+        padding: 10px 30px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+    }
+
+        .btn-danger:hover {
+            transform: scale(1.05);
+            background: #b30000;
+            color: white;
+        }
+</style>
+
+<div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-header bg-danger text-white text-center">
+            <h3><i class="bi bi-trash-fill"></i> Eliminar Datos</h3>
+        </div>
+        <div class="card-body p-4 text-center">
+            <p class="fw-bold text-danger">
+                ⚠ Esta acción eliminará todos los datos de:
+                <br /> <strong>Aprendices, Votos y Postulados</strong>.
+                
+            </p>
+
+            @using (Html.BeginForm("LimpiarBD", "Administradors", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-danger">
+                    <i class="bi bi-exclamation-triangle"></i> Eliminar Todo
+                </button>
+            }
+        </div>
+    </div>
+</div>

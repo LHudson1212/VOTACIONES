@@ -10,16 +10,14 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="correo_admin" Type="nvarchar" MaxLength="150" Nullable="false" />
-          <Property Name="contraseña_admin" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="DocumentoIdentidad" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Aprendiz">
           <Key>
             <PropertyRef Name="id_aprendiz" />
           </Key>
           <Property Name="id_aprendiz" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="correo_aprendiz" Type="nvarchar" MaxLength="150" Nullable="false" />
-          <Property Name="contraseña_aprendiz" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="DocumentoIdentidad" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Postulados">
           <Key>
@@ -32,6 +30,7 @@
           <Property Name="Descripcion" Type="nvarchar" MaxLength="100" />
           <Property Name="Jornada" Type="nvarchar" MaxLength="50" />
           <Property Name="Foto" Type="nvarchar" MaxLength="255" />
+          <Property Name="CantidadVotos" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Votos">
           <Key>
@@ -89,17 +88,15 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="correo_admin" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="contraseña_admin" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DocumentoIdentidad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Aprendiz">
           <Key>
             <PropertyRef Name="id_aprendiz" />
           </Key>
           <Property Name="id_aprendiz" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="correo_aprendiz" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="contraseña_aprendiz" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Votos" Relationship="VOTACIONESModel.FK_Voto_Aprendiz" FromRole="Aprendiz" ToRole="Votos" />
+          <Property Name="DocumentoIdentidad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityContainer Name="VOTACIONESEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Administrador" EntityType="Self.Administrador" />
@@ -127,6 +124,7 @@
           <Property Name="Jornada" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Foto" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Votos" Relationship="VOTACIONESModel.FK_Voto_Postulado" FromRole="Postulados" ToRole="Votos" />
+          <Property Name="CantidadVotos" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Votos">
           <Key>
@@ -172,24 +170,23 @@
           <EntitySetMapping Name="Administrador">
             <EntityTypeMapping TypeName="VOTACIONESModel.Administrador">
               <MappingFragment StoreEntitySet="Administrador">
+                <ScalarProperty Name="DocumentoIdentidad" ColumnName="DocumentoIdentidad" />
                 <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="correo_admin" ColumnName="correo_admin" />
-                <ScalarProperty Name="contraseña_admin" ColumnName="contraseña_admin" />
-              </MappingFragment>
+                </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Aprendiz">
             <EntityTypeMapping TypeName="VOTACIONESModel.Aprendiz">
               <MappingFragment StoreEntitySet="Aprendiz">
+                <ScalarProperty Name="DocumentoIdentidad" ColumnName="DocumentoIdentidad" />
                 <ScalarProperty Name="id_aprendiz" ColumnName="id_aprendiz" />
-                <ScalarProperty Name="correo_aprendiz" ColumnName="correo_aprendiz" />
-                <ScalarProperty Name="contraseña_aprendiz" ColumnName="contraseña_aprendiz" />
-              </MappingFragment>
+                </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Postulados">
             <EntityTypeMapping TypeName="VOTACIONESModel.Postulados">
               <MappingFragment StoreEntitySet="Postulados">
+                <ScalarProperty Name="CantidadVotos" ColumnName="CantidadVotos" />
                 <ScalarProperty Name="Foto" ColumnName="Foto" />
                 <ScalarProperty Name="Jornada" ColumnName="Jornada" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />

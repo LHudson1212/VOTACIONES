@@ -21,8 +21,7 @@ namespace VOTACIONES.Models
         }
     
         public int id_aprendiz { get; set; }
-        public string correo_aprendiz { get; set; }
-        public string contraseña_aprendiz { get; set; }
+        public string DocumentoIdentidad { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Votos> Votos { get; set; }

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.OleDb;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -36,25 +38,26 @@ namespace VOTACIONES.Controllers
         }
 
         // GET: Aprendizs/Create
+        [HttpGet]
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Aprendizs/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
-        // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id_aprendiz,correo_aprendiz,contraseña_aprendiz")] Aprendiz aprendiz)
+        public ActionResult Create([Bind(Include = "Documento")] Aprendiz aprendiz)
         {
             if (ModelState.IsValid)
             {
                 db.Aprendiz.Add(aprendiz);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                TempData["Mensaje"] = "✅ Aprendiz registrado correctamente.";
+               ModelState.Clear(); // Limpiar el formulario después de guardar
+                return View(new Aprendiz());
             }
 
+            TempData["Error"] = "⚠ Ocurrió un error al registrar el aprendiz.";
             return View(aprendiz);
         }
 
@@ -168,6 +171,8 @@ namespace VOTACIONES.Controllers
                     FechaVoto = DateTime.Now
                 };
 
+                postulado.CantidadVotos += 1;
+
                 db.Votos.Add(voto);
                 db.SaveChanges();
 
@@ -210,5 +215,72 @@ namespace VOTACIONES.Controllers
 
             return View(candidatos);
         }
+
+
+        [HttpGet]
+        public ActionResult CargarExcel()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CargarExcel(HttpPostedFileBase archivoExcel)
+        {
+            if (archivoExcel != null && archivoExcel.ContentLength > 0)
+            {
+                // Ruta fija en el PC (ejemplo Escritorio o carpeta Importaciones)
+                string rutaCarpeta = @"C:\Importaciones";
+
+                // Crear la carpeta si no existe
+                if (!Directory.Exists(rutaCarpeta))
+                {
+                    Directory.CreateDirectory(rutaCarpeta);
+                }
+
+                // Guardar el archivo en esa carpeta
+                string ruta = Path.Combine(rutaCarpeta, Path.GetFileName(archivoExcel.FileName));
+                archivoExcel.SaveAs(ruta);
+
+                // Conexión Excel
+                string conexionExcel = $"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={ruta};Extended Properties=\"Excel 12.0 Xml;HDR=YES\";";
+
+                using (OleDbConnection conn = new OleDbConnection(conexionExcel))
+                {
+                    conn.Open();
+                    OleDbCommand cmd = new OleDbCommand("SELECT * FROM [Hoja1$]", conn);
+                    OleDbDataAdapter da = new OleDbDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        string documento = row["DocumentoIdentidad"].ToString();
+
+                        if (!string.IsNullOrEmpty(documento) && !db.Aprendiz.Any(a => a.DocumentoIdentidad == documento))
+                        {
+                            var aprendiz = new Aprendiz
+                            {
+                                DocumentoIdentidad = documento,
+                              
+                            };
+
+                            db.Aprendiz.Add(aprendiz);
+                        }
+                    }
+
+                    db.SaveChanges();
+                }
+
+                TempData["Mensaje"] = "✅ Importación realizada correctamente.";
+                ModelState.Clear(); // Limpiar el formulario después de guardar
+                return View(new Aprendiz());
+            }
+
+            TempData["Error"] = "⚠ Debes seleccionar un archivo válido.";
+            return RedirectToAction("CargarExcel");
+        }
     }
 }
+
+
+

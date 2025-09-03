@@ -42,7 +42,7 @@ namespace VOTACIONES.Controllers
     {
         // Buscar administrador
         var admin = db.Administrador
-            .FirstOrDefault(a => a.correo_admin == documento && a.contraseña_admin == contrasena);
+            .FirstOrDefault(a => a.DocumentoIdentidad == documento && a.DocumentoIdentidad == contrasena);
 
         if (admin != null)
         {
@@ -56,7 +56,7 @@ namespace VOTACIONES.Controllers
 
         // Buscar aprendiz
         var aprendiz = db.Aprendiz
-            .FirstOrDefault(a => a.correo_aprendiz == documento && a.contraseña_aprendiz == contrasena);
+            .FirstOrDefault(a => a.DocumentoIdentidad == documento && a.DocumentoIdentidad == contrasena);
 
         if (aprendiz != null)
         {

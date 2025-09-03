@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using VOTACIONES.Models;
 
+
 namespace VOTACIONES.Controllers
 {
     public class AdministradorsController : Controller
@@ -124,16 +125,50 @@ namespace VOTACIONES.Controllers
             base.Dispose(disposing);
         }
 
-        public ActionResult Admin()
-        {
-            var postulados = db.Postulados.ToList(); // obtienes todos los registros
-            return View(postulados); // envías el modelo a la vista
-        }
 
-        public ActionResult Votacion()
+
+public ActionResult Admin()
+    {
+        var postulados = db.Postulados
+                           .Include(p => p.Votos) // incluimos los votos
+                           .ToList();
+
+        return View(postulados);
+    }
+
+    public ActionResult Votacion()
         {
             return View();
         }
 
-    }
+     public ActionResult Limpiar()
+        {
+            return View();
+        }
+
+
+   [HttpPost]
+   [ValidateAntiForgeryToken]
+   public ActionResult LimpiarBD()
+            {
+                try
+                {
+                    // Orden correcto: primero dependencias
+                    db.Votos.RemoveRange(db.Votos);
+                    db.Postulados.RemoveRange(db.Postulados);
+                    db.Aprendiz.RemoveRange(db.Aprendiz);
+
+                    db.SaveChanges();
+
+                    TempData["Mensaje"] = "✅ Todos los datos fueron eliminados (excepto Administrador).";
+                }
+                catch (Exception ex)
+                {
+                    TempData["Error"] = "⚠ Ocurrió un error al limpiar la base de datos: " + ex.Message;
+                }
+
+                return RedirectToAction("Admin", "Administradors");
+            }
+        }
+
 }

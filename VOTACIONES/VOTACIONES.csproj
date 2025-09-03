@@ -256,6 +256,8 @@
     <Content Include="Views\Votos\Details.cshtml" />
     <Content Include="Views\Votos\Edit.cshtml" />
     <Content Include="Views\Votos\Index.cshtml" />
+    <Content Include="Views\Aprendizs\CargarExcel.cshtml" />
+    <Content Include="Views\Administradors\Limpiar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
