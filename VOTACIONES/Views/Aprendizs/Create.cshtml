@@ -50,19 +50,22 @@
 <div class="container mt-5">
     <div class="card shadow-lg border-0 rounded-4">
         <div class="card-header">
-            <h3><i class="bi bi-person-plus-fill"></i> Crear Aprendiz</h3>
+            <h3><i class="bi bi-person-plus-fill"></i> Ingresar Aprendiz</h3>
         </div>
         <div class="card-body p-4">
 
             <!-- Botones de navegación -->
             <div class="text-end mb-4">
-                <a href="@Url.Action("Index", "Aprendizs")" class="btn btn-sena px-4">
-                    <i class="bi bi-list-ul"></i> Lista de Aprendices
+
+                <a href="@Url.Action("Index", "Postulados")" class="btn btn-sena px-4">
+                    <i class="bi bi-list-ul"></i> Lista de Postulados
+                </a>
+                <a href="@Url.Action("Create", "Postulados")" class="btn btn-sena px-4">
+                    <i class="bi bi-list-ul"></i> Crear postulado
                 </a>
 
-                <a href="@Url.Action("Admin", "Administradors")" class="btn btn-sena px-4">
-                    <i class="bi bi-shield-lock-fill"></i> Administrador
-
+                <a href="@Url.Action("CargarExcel", "Aprendizs")" class="btn btn-sena px-4">
+                    <i class="bi bi-list-ul"></i> Ingresar aprendices
                 </a>
 
                 <a href="@Url.Action("Admin", "Administradors")" class="btn btn-sena px-4">
@@ -82,7 +85,7 @@
 
                 <div class="mb-3">
                     <label for="DocumentoIdentidad" class="form-label fw-bold">🆔 Documento de Identidad</label>
-                    @Html.TextBoxFor(model => model.DocumentoIdentidad, new { @class = "form-control", placeholder = "Ingrese número de cédula", required = "required" })
+                    @Html.TextBoxFor(model => model.DocumentoIdentidad, new { @class = "form-control", placeholder = "Ingrese número de cédula", required = "required min " })
                     @Html.ValidationMessageFor(model => model.DocumentoIdentidad, "", new { @class = "text-danger" })
                 </div>
 

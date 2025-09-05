@@ -245,7 +245,6 @@
     <Content Include="Views\Aprendizs\Mixta.cshtml" />
     <Content Include="Views\Aprendizs\Nocturna.cshtml" />
     <Content Include="Views\Administradors\Admin.cshtml" />
-    <Content Include="Views\Administradors\Votacion.cshtml" />
     <Content Include="Views\Postulados\Create.cshtml" />
     <Content Include="Views\Postulados\Delete.cshtml" />
     <Content Include="Views\Postulados\Details.cshtml" />
