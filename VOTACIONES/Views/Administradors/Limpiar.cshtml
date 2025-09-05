@@ -4,47 +4,127 @@
 }
 
 <style>
-    .card-header.bg-danger {
-        background: linear-gradient(135deg, #cc0000, #ff3333);
+    /* Encabezado amarillo de advertencia */
+    .card-header.bg-warning {
+        background: linear-gradient(135deg, #ffcc00, #ffdb4d);
         font-weight: bold;
         border-top-left-radius: 1rem;
         border-top-right-radius: 1rem;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     }
 
-    .btn-danger {
+    /* Botones estilo advertencia */
+    .btn-warning {
         border-radius: 0.75rem;
         padding: 10px 30px;
         font-weight: bold;
         transition: all 0.3s ease;
+        color: #000;
     }
 
-        .btn-danger:hover {
+        .btn-warning:hover {
             transform: scale(1.05);
-            background: #b30000;
-            color: white;
+            background: #e6b800;
+            color: #000;
         }
+
+    /* Botones de navegación estilo SENA adaptados a advertencia */
+    .btn-sena {
+        background: #ffcc00;
+        color: #000;
+        font-weight: bold;
+        border-radius: 0.75rem;
+        margin-left: 10px;
+        transition: all 0.3s ease;
+    }
+
+        .btn-sena:hover {
+            background: #e6b800;
+            color: #000;
+            transform: translateY(-2px);
+        }
+
+    /* Modal estilo advertencia */
+    .modal-header.bg-warning {
+        background: linear-gradient(135deg, #ffcc00, #ffdb4d);
+        font-weight: bold;
+        color: #000;
+    }
+
+    .modal-content {
+        border: 2px solid #ffcc00;
+        border-radius: 1rem;
+    }
 </style>
 
 <div class="container mt-5">
     <div class="card shadow-lg border-0 rounded-4">
-        <div class="card-header bg-danger text-white text-center">
-            <h3><i class="bi bi-trash-fill"></i> Eliminar Datos</h3>
+        <div class="card-header bg-warning text-dark text-center">
+            <h3><i class="bi bi-exclamation-triangle-fill"></i> Eliminar Datos</h3>
         </div>
+
+        <!-- Botones de navegación -->
+        <div class="text-end mb-4 mt-3 me-3">
+            <a href="@Url.Action("Index", "Postulados")" class="btn btn-sena px-4">
+                <i class="bi bi-list-ul"></i> Lista de Postulados
+            </a>
+
+            <a href="@Url.Action("Index", "Aprendizs")" class="btn btn-sena px-4">
+                <i class="bi bi-person-lines-fill"></i> Ingresar Aprendices
+            </a>
+
+            <a href="@Url.Action("Admin", "Administradors")" class="btn btn-sena px-4">
+                <i class="bi bi-arrow-left-circle"></i> Regresar
+            </a>
+
+            <a href="@Url.Action("Login", "Home")" class="btn btn-sena px-4">
+                <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+            </a>
+        </div>
+
         <div class="card-body p-4 text-center">
-            <p class="fw-bold text-danger">
+            <p class="fw-bold text-dark">
                 ⚠ Esta acción eliminará todos los datos de:
                 <br /> <strong>Aprendices, Votos y Postulados</strong>.
-                
             </p>
 
-            @using (Html.BeginForm("LimpiarBD", "Administradors", FormMethod.Post))
-            {
-                @Html.AntiForgeryToken()
-                <button type="submit" class="btn btn-danger">
-                    <i class="bi bi-exclamation-triangle"></i> Eliminar Todo
-                </button>
-            }
+            <!-- Botón que abre el modal -->
+            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#confirmarModal">
+                <i class="bi bi-trash"></i> Eliminar Todo
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de confirmación -->
+<div class="modal fade" id="confirmarModal" tabindex="-1" aria-labelledby="confirmarModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 shadow-lg">
+            <div class="modal-header bg-warning text-dark">
+                <h5 class="modal-title fw-bold" id="confirmarModalLabel">
+                    <i class="bi bi-exclamation-circle"></i> Confirmar Eliminación
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+
+            <div class="modal-body text-center">
+                <p class="fw-bold">
+                    ¿Estás seguro que deseas <span class="text-danger">eliminar todos los datos</span>?
+                </p>
+                <p>Esta acción no se puede deshacer.</p>
+            </div>
+
+            <div class="modal-footer d-flex justify-content-center">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+
+                @using (Html.BeginForm("LimpiarBD", "Administradors", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-warning fw-bold">
+                        <i class="bi bi-check-circle"></i> Sí, eliminar
+                    </button>
+                }
+            </div>
         </div>
     </div>
 </div>
