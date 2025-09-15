@@ -127,16 +127,22 @@ namespace VOTACIONES.Controllers
 
 
 
-public ActionResult Admin()
-    {
-        var postulados = db.Postulados
-                           .Include(p => p.Votos) // incluimos los votos
-                           .ToList();
+        public ActionResult Admin()
+        {
+            var postulados = db.Postulados
+                               .Include(p => p.Votos)
+                               .ToList();
 
-        return View(postulados);
-    }
+            // Recalcular los votos directamente desde la relación
+            foreach (var p in postulados)
+            {
+                p.CantidadVotos = p.Votos.Count;
+            }
 
-    public ActionResult Votacion()
+            return View(postulados);
+        }
+
+        public ActionResult Votacion()
         {
             return View();
         }

@@ -10,14 +10,14 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DocumentoIdentidad" Type="nvarchar" MaxLength="50" />
+          <Property Name="DocumentoIdentidad" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Aprendiz">
           <Key>
             <PropertyRef Name="id_aprendiz" />
           </Key>
           <Property Name="id_aprendiz" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DocumentoIdentidad" Type="nvarchar" MaxLength="50" />
+          <Property Name="DocumentoIdentidad" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Postulados">
           <Key>
@@ -25,12 +25,12 @@
           </Key>
           <Property Name="IdPostulado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nombre" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Propuestas" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Propuestas" Type="varchar" MaxLength="300" Nullable="false" />
           <Property Name="Aptitudes" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Descripcion" Type="nvarchar" MaxLength="100" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="1000" Nullable="false" />
           <Property Name="Jornada" Type="nvarchar" MaxLength="50" />
           <Property Name="Foto" Type="nvarchar" MaxLength="255" />
-          <Property Name="CantidadVotos" Type="int" Nullable="false" />
+          <Property Name="CantidadVotos" Type="int" />
         </EntityType>
         <EntityType Name="Votos">
           <Key>
@@ -88,7 +88,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DocumentoIdentidad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DocumentoIdentidad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Aprendiz">
           <Key>
@@ -96,7 +96,7 @@
           </Key>
           <Property Name="id_aprendiz" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Votos" Relationship="VOTACIONESModel.FK_Voto_Aprendiz" FromRole="Aprendiz" ToRole="Votos" />
-          <Property Name="DocumentoIdentidad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DocumentoIdentidad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityContainer Name="VOTACIONESEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Administrador" EntityType="Self.Administrador" />
@@ -118,13 +118,13 @@
           </Key>
           <Property Name="IdPostulado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Propuestas" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Propuestas" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="Aptitudes" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Descripcion" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Jornada" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Foto" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Votos" Relationship="VOTACIONESModel.FK_Voto_Postulado" FromRole="Postulados" ToRole="Votos" />
-          <Property Name="CantidadVotos" Type="Int32" Nullable="false" />
+          <Property Name="CantidadVotos" Type="Int32" />
         </EntityType>
         <EntityType Name="Votos">
           <Key>

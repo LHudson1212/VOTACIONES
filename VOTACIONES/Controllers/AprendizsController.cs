@@ -46,7 +46,7 @@ namespace VOTACIONES.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Documento")] Aprendiz aprendiz)
+        public ActionResult Create([Bind(Include = "DocumentoIdentidad")] Aprendiz aprendiz)
         {
             if (ModelState.IsValid)
             {
@@ -171,7 +171,7 @@ namespace VOTACIONES.Controllers
                     FechaVoto = DateTime.Now
                 };
 
-                postulado.CantidadVotos += 1;
+              
 
                 db.Votos.Add(voto);
                 db.SaveChanges();
